@@ -16,7 +16,7 @@ namespace P013EStore.Core.Entities
         [Display(Name = "Açıklama")]
         public string? Description { get; set; }
         [Display(Name = "Resim")]
-        public int? Image { get; set; }
+        public string? Image { get; set; }
         [Display(Name = "Durum")]
         public bool IsActive { get; set; }
         [Display(Name = "Üst Menüde Göster")]

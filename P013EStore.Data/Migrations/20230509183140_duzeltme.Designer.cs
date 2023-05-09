@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P013EStore.Data;
 
@@ -11,9 +12,11 @@ using P013EStore.Data;
 namespace P013EStore.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230509183140_duzeltme")]
+    partial class duzeltme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +80,7 @@ namespace P013EStore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 5, 9, 23, 2, 35, 603, DateTimeKind.Local).AddTicks(3956),
+                            CreateDate = new DateTime(2023, 5, 9, 21, 31, 40, 470, DateTimeKind.Local).AddTicks(8171),
                             Email = "info@P013EStore.com",
                             IsActive = true,
                             IsAdmin = true,
@@ -219,9 +222,9 @@ namespace P013EStore.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<int?>("Image")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

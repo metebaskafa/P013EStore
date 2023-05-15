@@ -24,8 +24,8 @@ namespace P013EStore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // fluentAPI ile veritabanı tablolarımız oluşurken veri tiplerini db kurallarını burada tanımlayabiliriz.
-            modelBuilder.Entity<AppUser>().Property(a=> a.Name).IsRequired().HasColumnType("varchar(50)").HasMaxLength(50); // FluentAPI İle AppUser clasının Name Property si için oluşacak veritabanı kolonu ayarını bu şekilde belirleyebiliyoruz
-            modelBuilder.Entity<AppUser>().Property(a => a.Surname).HasColumnType("varchar(50)").HasMaxLength(50);
+            modelBuilder.Entity<AppUser>().Property(a=> a.Name).IsRequired().HasMaxLength(50); // FluentAPI İle AppUser clasının Name Property si için oluşacak veritabanı kolonu ayarını bu şekilde belirleyebiliyoruz
+            modelBuilder.Entity<AppUser>().Property(a => a.Surname).HasMaxLength(50);
             modelBuilder.Entity<AppUser>().Property(a => a.UserName).HasColumnType("varchar(50)").HasMaxLength(50);
             modelBuilder.Entity<AppUser>().Property(a => a.Password).IsRequired().HasColumnType("nvarchar(100)").HasMaxLength(100);
             modelBuilder.Entity<AppUser>().Property(a => a.Email).IsRequired().HasMaxLength(50);

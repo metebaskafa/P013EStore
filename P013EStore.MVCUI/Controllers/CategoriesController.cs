@@ -22,7 +22,7 @@ namespace P013EStore.MVCUI.Controllers
             {
                 return NotFound();
             }
-            model.Products = await _serviceProduct.GetAllAsync(p => p.CategoryId == id);
+            model.Products = await _serviceProduct.GetAllAsync(p => p.CategoryId == id); //kategorilerdeki ürünleri listelemek
             return View(model);
         }
     }

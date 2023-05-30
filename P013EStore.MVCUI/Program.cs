@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSession();//uygulamada session kullanabilmek için 
+
 builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddTransient(typeof(IService<>), typeof(Service<>)); // kendi yazdýðýmýz db iþlemlerini yapan servisi .net core da bu þekilde mvc projesine servis olarak tanýtýyoruz ki kullanabilelim
 builder.Services.AddTransient<IProductService, ProductService>();// product için yazdýðýmýz özel servisi uygulamaya tanýttýk.
@@ -38,6 +41,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();// session için 
 
 app.UseAuthentication(); // dikkat! önce useAuthentication satýrý gelmeli sonra useAuthorization
 app.UseAuthorization();

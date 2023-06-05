@@ -40,8 +40,8 @@ namespace P013EStore.WebAPI.Controllers
         }
 
         // PUT api/<BrandsController>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> PutAsync(int id, [FromBody] Brand value)
+        [HttpPut]
+        public async Task<ActionResult> PutAsync([FromBody] Brand value)
         {
             _service.Update(value);
             int sonuc= await _service.SaveAsync();

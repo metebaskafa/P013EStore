@@ -41,7 +41,7 @@ namespace P013EStore.WebAPI.Controllers
 
         // PUT api/<CategoriesController>/5
         [HttpPut] //  [HttpPut("{id}")] orjinali
-        public async Task<int> PutAsync(int id, [FromBody] Category value)
+        public async Task<int> PutAsync([FromBody] Category value)
         {
             _service.Update(value);
             return await _service.SaveAsync();

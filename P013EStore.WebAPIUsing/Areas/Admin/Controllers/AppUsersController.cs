@@ -105,7 +105,7 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
                 await _httpClient.DeleteAsync(_apiAdres + "/" + id);
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch 
             {
 
                 return View();

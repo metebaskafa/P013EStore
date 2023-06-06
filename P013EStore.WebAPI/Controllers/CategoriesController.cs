@@ -48,12 +48,18 @@ namespace P013EStore.WebAPI.Controllers
            
         }
 
-        // DELETE api/<CategoriesController>/5
-        [HttpDelete]
-        public async Task<int> Delete([FromBody] Category value)
-        {
-          _service.Delete(value);
-            return await _service.SaveAsync();
-        }
-    }
+		// DELETE api/<CategoriesController>/5
+		[HttpDelete("{id}")]
+		public ActionResult Delete(int id)
+		{
+			var kayit = _service.Find(id);
+			if (kayit == null)
+			{
+				return NotFound();
+			}
+			_service.Delete(kayit);
+			_service.Save();
+			return Ok(kayit);
+		}
+	}
 }

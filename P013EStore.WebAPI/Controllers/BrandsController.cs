@@ -59,7 +59,7 @@ namespace P013EStore.WebAPI.Controllers
             var kayit = _service.Find(id);
             if (kayit == null)
             {
-                return NoContent();
+                return NotFound();
             }
             _service.Delete(kayit);
             _service.Save();

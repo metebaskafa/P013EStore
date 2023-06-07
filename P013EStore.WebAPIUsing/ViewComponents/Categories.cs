@@ -1,20 +1,21 @@
 ﻿using P013EStore.Core.Entities;
-using P013EStore.Service.Abstract;
+
 using Microsoft.AspNetCore.Mvc;
 
-namespace P013EStore.MVCUI.ViewComponents
+namespace P013EStore.WebAPIUsing.ViewComponents
 {
     public class Categories : ViewComponent
     {
-        private readonly IService<Category> _service;
+		private readonly HttpClient _httpClient;
 
-        public Categories(IService<Category> service)
+		public Categories(HttpClient httpClient)
+		{
+			_httpClient = httpClient;
+		}
+		
+		public async Task<IViewComponentResult> InvokeAsync()
         {
-            _service = service;
-        }
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
-            return View(await _service.GetAllAsync());
+            return View(await _httpClient.GetFromJsonAsync<List<Category>>("https://localhost:44335/api/Categories"));
         }
     }
 }

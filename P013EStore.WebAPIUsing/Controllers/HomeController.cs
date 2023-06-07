@@ -1,32 +1,76 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using P013EStore.Core.Entities;
 using P013EStore.WebAPIUsing.Models;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace P013EStore.WebAPIUsing.Controllers
 {
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+	public class HomeController : Controller
+	{
+		private readonly HttpClient _httpClient;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+		public HomeController(HttpClient httpClient)
+		{
+			_httpClient = httpClient;
+		}
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+		private readonly string _apiAdres = "https://localhost:44335/api/";
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+		public async Task<IActionResult> IndexAsync()
+		{
+			var products = await _httpClient.GetFromJsonAsync<List<Product>>(_apiAdres + "Products");
+			var model = new HomePageViewModel()
+			{
+				Sliders = await _httpClient.GetFromJsonAsync<List<Slider>>(_apiAdres + "Slider"),
+				Products = products.Where(p => p.IsActive && p.IsHome).ToList()
+			};
+			return View(model);
+		}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+		public IActionResult Privacy()
+		{
+			return View();
+		}
+		[Route("iletisim")]
+		public IActionResult ContactUs()
+		{
+			return View();
+		}
+		[Route("iletisim"), HttpPost]
+		public async Task<IActionResult> ContactUs(Contact contact)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					var response = await _httpClient.PostAsJsonAsync(_apiAdres + "Contacts", contact);
+					if (response.IsSuccessStatusCode)
+					{
+						// await MailHelper.SendMailAsync(contact); // gelen mesajı mail gönder.
+						TempData["Message"] = "<div class='alert alert-success'> Mesajınız Gönderildi.Teşekkürler... </div>";
+						return RedirectToAction("ContactUs");
+					}
+				}
+				catch (Exception)
+				{
+
+					ModelState.AddModelError("", "Hata Oluştu!");
+				}
+
+			}
+			return View();
+		}
+		[Route("AccessDenied")]
+		public IActionResult AccessDenied()
+		{
+			return View();
+		}
+
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		public IActionResult Error()
+		{
+			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+	}
 }

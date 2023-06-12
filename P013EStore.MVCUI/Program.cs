@@ -16,7 +16,7 @@ builder.Services.AddTransient<IProductService, ProductService>();// product için
 
 //builder.Services.AddSingleton<IProductService, ProductService>(); // addsingleton yöntemi ile servis eklediðimizde sistem uygulamayý çalýþtýrdýðýnda bu nesneden 1 tane üretir ve her istekte ayný nesne gönderilir. performans olarak diðerlerinden iyi yöntemdir
 //builder.Services.AddScoped<IProductService, ProductService>(); // addsingleton yöntemi ile servis eklediðimizde sistem uygulamayý çalýþtýrdýðýnda bu nesneye gelen hjer istek için ayrý ayrý nesneler üretip bunu kullanýma sunar içeriðin çok dinamik bir þekilde sürekli deðiþtiði projelerde kullanýlabilir. döviz altýn fiyatý gibi anlýk deðiþimlerin olduðu projelerde mesela
-
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 //uygulama admin paneli için oturum açma ayarlarý
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>

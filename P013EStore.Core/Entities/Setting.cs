@@ -27,7 +27,11 @@ namespace P013EStore.Core.Entities
         [Display(Name = "Mail Şifresi")]
         public string? Password { get; set; }
         public string? Favicon { get; set; }
+        [Display(Name = "Site Logo")]
         public string? Logo { get; set; }
-
+        [Display(Name = "Firma Adresi")]
+        public string? Address { get; set; } 
+        [Display(Name = "Firma Harita Kodu")]
+        public string? MapCode { get; set; }
     }
 }

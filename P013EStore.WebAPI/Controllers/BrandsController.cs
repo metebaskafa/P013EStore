@@ -11,10 +11,12 @@ namespace P013EStore.WebAPI.Controllers
     public class BrandsController : ControllerBase
     {
         private readonly IService<Brand> _service; // readonly nesneler sadece constructor metotda dolduralabilir service e tıklayıp generate constructor diyoruz. 
+        private readonly IService<Product> _serviceProduct;
 
-        public BrandsController(IService<Brand> service)
+        public BrandsController(IService<Brand> service, IService<Product> serviceProduct)
         {
             _service = service;
+            _serviceProduct = serviceProduct;
         }
         // GET: api/<BrandsController>
         [HttpGet]
@@ -25,9 +27,16 @@ namespace P013EStore.WebAPI.Controllers
 
         // GET api/<BrandsController>/5
         [HttpGet("{id}")]
-        public async Task<Brand> GetAsync(int id)
+        public async Task<ActionResult<Brand>> GetAsync(int id)
         {
-            return await _service.FindAsync(id);
+            var model = await _service.FindAsync(id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            model.Products = await _serviceProduct.GetAllAsync(p => p.BrandId == id);
+           
+            return Ok(model);
         }
 
         // POST api/<BrandsController>

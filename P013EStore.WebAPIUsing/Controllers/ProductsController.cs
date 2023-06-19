@@ -14,7 +14,7 @@ namespace P013EStore.WebAPIUsing.Controllers
 		}
 
 		private readonly string _apiAdres = "https://localhost:44335/api/Products";
-		[Route("tum-urunlerimiz")]
+		//[Route("tum-urunlerimiz")]
 		public async Task<ActionResult> Index()
 		{
 			var model = await _httpClient.GetFromJsonAsync<List<Product>>(_apiAdres);

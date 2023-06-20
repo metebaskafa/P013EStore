@@ -16,7 +16,6 @@ namespace P013EStore.WebAPI.Controllers
         {
             _service = service;
         }
-
         // GET: api/<SettingsController>
         [HttpGet]
         public async Task<IEnumerable<Setting>> GetAsync()
@@ -33,7 +32,7 @@ namespace P013EStore.WebAPI.Controllers
 
         // POST api/<SettingsController>
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] Setting value)
+        public async Task<IActionResult> PostAsync([FromBody] Setting value)
         {
             await _service.AddAsync(value);
             await _service.SaveAsync();
@@ -42,7 +41,7 @@ namespace P013EStore.WebAPI.Controllers
 
         // PUT api/<SettingsController>/5
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Setting value)
+        public async Task<IActionResult> Put([FromBody] Setting value)
         {
             _service.Update(value);
             await _service.SaveAsync();

@@ -12,17 +12,15 @@ namespace P013EStore.WebAPIUsing.Controllers
             _httpClient = httpClient;
         }
         private readonly string _apiAdres = "https://localhost:44335/api/Brands/";
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> IndexAsync(int? id)
         {
             if (id is null)
             {
-                BadRequest();
+                return BadRequest();
             }
             var model = await _httpClient.GetFromJsonAsync<Brand>(_apiAdres + id.Value);
             if (model == null)
-            {
                 return NotFound();
-            }
             return View(model);
         }
     }

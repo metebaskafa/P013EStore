@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace P013EStore.Core.Entities
 {
-    public class Log :IEntity
+    public class AppLog :IEntity
     {
         public int Id { get; set; }
         [Display(Name = "Başlık")]

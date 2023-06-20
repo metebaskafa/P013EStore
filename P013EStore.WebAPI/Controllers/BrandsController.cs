@@ -2,17 +2,14 @@
 using P013EStore.Core.Entities;
 using P013EStore.Service.Abstract;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace P013EStore.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class BrandsController : ControllerBase
     {
-        private readonly IService<Brand> _service; // readonly nesneler sadece constructor metotda dolduralabilir service e tıklayıp generate constructor diyoruz. 
+        private readonly IService<Brand> _service; // readonly nesneler sadece constructor metotta doldurulabilir
         private readonly IService<Product> _serviceProduct;
-
         public BrandsController(IService<Brand> service, IService<Product> serviceProduct)
         {
             _service = service;
@@ -35,7 +32,6 @@ namespace P013EStore.WebAPI.Controllers
                 return NotFound();
             }
             model.Products = await _serviceProduct.GetAllAsync(p => p.BrandId == id);
-           
             return Ok(model);
         }
 
@@ -53,8 +49,8 @@ namespace P013EStore.WebAPI.Controllers
         public async Task<ActionResult> PutAsync([FromBody] Brand value)
         {
             _service.Update(value);
-            int sonuc= await _service.SaveAsync();
-            if (sonuc>0)
+            int sonuc = await _service.SaveAsync();
+            if (sonuc > 0)
             {
                 return Ok(value);
             }
@@ -63,7 +59,7 @@ namespace P013EStore.WebAPI.Controllers
 
         // DELETE api/<BrandsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id) // geriye değer dönmeyeceksek void olur
+        public ActionResult Delete(int id)
         {
             var kayit = _service.Find(id);
             if (kayit == null)

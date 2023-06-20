@@ -26,7 +26,7 @@ namespace P013EStore.WebAPIUsing.Controllers
 				Sliders = await _httpClient.GetFromJsonAsync<List<Slider>>(_apiAdres + "Slider"),
 				Products = products.Where(p => p.IsActive && p.IsHome).ToList(),
 				Brands = brands.Where(p => p.IsActive).ToList(),
-				News = await _httpClient.GetFromJsonAsync<List<News>>(_apiAdres + "News"),
+				News = await _httpClient.GetFromJsonAsync<List<News>>(_apiAdres + "News")
             };
 			return View(model);
 		}

@@ -40,22 +40,33 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
         // POST: NewsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> CreateAsync(News collection, IFormFile? Image)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (Image is not null)
+                {
+                    collection.Image = await FileHelper.FileLoaderAsync(Image);
+                }
+                var response = await _httpClient.PostAsJsonAsync(_apiAdres, collection);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "Hata Oluştu!");
             }
+
+            return View();
         }
 
         // GET: NewsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(int id)
         {
-            return View();
+            var model = await _httpClient.GetFromJsonAsync<News>(_apiAdres + "/" + id);
+            return View(model);
         }
 
         // POST: NewsController/Edit/5

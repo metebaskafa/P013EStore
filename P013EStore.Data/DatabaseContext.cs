@@ -16,7 +16,7 @@ namespace P013EStore.Data
         public DbSet<Slider>  Sliders { get; set; }
         public  DbSet<News> News { get; set; }
         public  DbSet<Setting> Settings{ get; set; }
-        public  DbSet<Log> Logs { get; set; }
+        public  DbSet<AppLog> Logs { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // onconfiguring metodu veritabanı ile bağlantı ayarlarını yapmamızı sağlar

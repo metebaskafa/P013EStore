@@ -17,5 +17,18 @@ namespace P013EStore.WebAPIUsing.Controllers
             var model = await _httpClient.GetFromJsonAsync<List<News>>(_apiAdres);
             return View(model);
         }
+        public async Task<IActionResult> Detail(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            var model = await _httpClient.GetFromJsonAsync<News>(_apiAdres + id.Value);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
     }
 }

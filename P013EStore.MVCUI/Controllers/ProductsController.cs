@@ -2,16 +2,20 @@
 using P013EStore.Core.Entities;
 using P013EStore.MVCUI.Models;
 using P013EStore.Service.Abstract;
+using System.Reflection;
 
 namespace P013EStore.MVCUI.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly IProductService _serviceProduct;
+        private readonly IService<AppLog> _serviceLog;
 
-        public ProductsController(IProductService serviceProduct)
+        public ProductsController(IProductService serviceProduct, IService<AppLog> serviceLog)
         {
+            
             _serviceProduct = serviceProduct;
+            _serviceLog = serviceLog;
         }
         //[Route("tum-urunlerimiz")] // adres çubuğundan tum-urunlerimiz yazınca bu action çalışsın
         public async Task<IActionResult> Index()
@@ -28,13 +32,28 @@ namespace P013EStore.MVCUI.Controllers
         public async Task<IActionResult> DetailAsync(int id)
         {
             var model = new ProductsDetailViewModel();
-            var product= await _serviceProduct.GetProductByIncludeAsync(id);
-            model.Product = product;
-            model.RelatedProducts = await _serviceProduct.GetAllAsync(p => p.CategoryId ==product.CategoryId && p.Id != id);
-            if (model is null)
+            try
+            {
+                var product = await _serviceProduct.GetProductByIncludeAsync(id);
+                model.Product = product;
+                model.RelatedProducts = await _serviceProduct.GetAllAsync(p => p.CategoryId == product.CategoryId && p.Id != id);
+              
+            }
+            catch (Exception hata)
+            {
+                var log = new AppLog();
+                {
+                    Description = "Hata Oluştu :" + hata.Message;
+                    Title = "Hata Oluştu :"
+                };   
+                await _serviceLog.AddAsync(log);
+                await _serviceLog.SaveAsync();
+            }
+            if (model.Product is null)
             {
                 return NotFound();
             }
+
             return View(model);
         }
     }

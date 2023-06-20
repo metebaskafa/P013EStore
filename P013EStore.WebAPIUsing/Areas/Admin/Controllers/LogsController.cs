@@ -20,7 +20,7 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
         // GET: LogsController
         public async Task<ActionResult> Index()
         {
-            var model = await _httpClient.GetFromJsonAsync<List<Log>>(_apiAdres);
+            var model = await _httpClient.GetFromJsonAsync<List<AppLog>>(_apiAdres);
             return View(model);
         }
 
@@ -39,7 +39,7 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
         // POST: LogsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync(Log collection)
+        public async Task<ActionResult> CreateAsync(AppLog collection)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
         // GET: LogsController/Edit/5
         public async Task<ActionResult> EditAsync(int id)
         {
-            var model = await _httpClient.GetFromJsonAsync<Log>(_apiAdres + "/" + id);
+            var model = await _httpClient.GetFromJsonAsync<AppLog>(_apiAdres + "/" + id);
 
             return View(model);
         }
@@ -68,7 +68,7 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
         // POST: LogsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync(int id, Log collection)
+        public async Task<ActionResult> EditAsync(int id, AppLog collection)
         {
             try
             {
@@ -89,15 +89,16 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
 
 
         // GET: LogsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            return View();
+            var model = await _httpClient.GetFromJsonAsync<AppLog>(_apiAdres + "/" + id);
+            return View(model);
         }
 
         // POST: LogsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteAsync(int id, Log collection)
+        public async Task<ActionResult> DeleteAsync(int id, AppLog collection)
         {
             try
             {

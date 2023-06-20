@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using P013EStore.Core.Entities;
 using P013EStore.Service.Abstract;
 
@@ -16,7 +17,6 @@ namespace P013EStore.WebAPI.Controllers
         {
             _service = service;
         }
-
         // GET: api/<NewsController>
         [HttpGet]
         public async Task<IEnumerable<News>> GetAsync()
@@ -33,7 +33,7 @@ namespace P013EStore.WebAPI.Controllers
 
         // POST api/<NewsController>
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody]News value)
+        public async Task<ActionResult> PostAsync([FromBody] News value)
         {
             await _service.AddAsync(value);
             await _service.SaveAsync();

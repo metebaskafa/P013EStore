@@ -41,9 +41,9 @@ namespace P013EStore.MVCUI.Controllers
             }
             catch (Exception hata)
             {
-                var log = new AppLog();
+                var log = new AppLog()
                 {
-                    Description = "Hata Oluştu :" + hata.Message;
+                    Description = "Hata Oluştu :" + hata.Message,
                     Title = "Hata Oluştu :"
                 };   
                 await _serviceLog.AddAsync(log);
